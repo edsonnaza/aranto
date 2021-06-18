@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class ModificarTablaPersonaIdusuario extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+          Schema::table('personas', function (Blueprint $table) {
+        $table->unsignedBigInteger('id_usuario')->nullable();
+        $table->foreign('id_usuario', 'fk_idusuario')->references('id')->on('usuario')->onDelete('restrict')->onUpdate('restrict');
+                });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('personas');
+
+    }
+}
