@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\Models\ComprasFI;
+use App\Models\Unidad;
+use App\Models\Persona;
+use App\Models\Clasificacion;
+use App\Models\TipoDocumentos;
 use Illuminate\Http\Request;
 
 class ComprasFIController extends Controller
@@ -9,8 +13,15 @@ class ComprasFIController extends Controller
          public function index()
     {
         $datas = ComprasFI::All();
-       // $sedes= Sede::All();
-        return view('comprasfi.index', compact('datas'));
+       // dd($datas);
+        $almacenes=Unidad::All();
+        $tipodocumentos=TipoDocumentos::where('activo',true)->get();
+        //$proveedor=Persona::belongsToMany(Clasificacion::class, 'clasificacion_persona','id_persona','id_clasificacion')->where('id_clasificacion',4)->get();
+      //  $personas=Persona::All();
+        // $sedes= Sede::All();
+        $proveedores=Persona::whereHas('ClasificacionProveedor')->get();
+        // dd($proveedor);
+       return view('comprasfi.index', compact('datas','almacenes','proveedores','tipodocumentos'));
     }
 
 
@@ -29,10 +40,20 @@ class ComprasFIController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function crear()
-    {
-        can('crear-categoriapadre');
-        return view('catastros.categoriapadre.crear');
+    public function crear(Request $request)
+    {  // protected $fillable = ['id_unidad_origen','id_unidad_destino','id_proveedor','id_tipodocumento',
+        //'numero_documento','descripcion_documento','importe_totalcompra','descuento_total','fecha_documento',
+        //'id_usuariorecibio','usuario_recibio','id_usuariocreado','usuario_creado',
+        //'id_usuariotermino','usuario_termino','pendiente_entrega','terminado','clave_verificado',
+        //'fecha_terminado','eliminado','id_usuarioelimino','usuario_elimino','id_usuarioactualizo',
+        //'usuario_actualizo','sede_id'];
+
+        //dd($request);
+        $comprasfi_cab = ComprasFI::create($request->all());
+
+
+       // can('crear-categoriapadre');
+       // return view('catastros.comprasfi.crear');
     }
 
     /**
@@ -43,7 +64,7 @@ class ComprasFIController extends Controller
      */
     public function guardar(ValidarCategoriaPadre $request)
     {
-        $categoriapadre = CategoriaPadre::create($request->all());
+        $comprasfi_cab = ComprasFI::create($request->all());
 
 
      

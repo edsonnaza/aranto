@@ -51,6 +51,10 @@ class Persona extends Model
         return $this->belongsToMany(Clasificacion::class, 'clasificacion_persona','id_persona','id_clasificacion')->wherePivot('id_clasificacion',2);
     }
     
+      public function ClasificacionProveedor()
+    {
+        return $this->belongsToMany(Clasificacion::class, 'clasificacion_persona','id_persona','id_clasificacion')->wherePivot('id_clasificacion',4);
+    }
 
 
     public static function setFoto($foto, $actual = false)

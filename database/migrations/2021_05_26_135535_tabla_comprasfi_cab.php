@@ -25,8 +25,8 @@ class TablaComprasfiCab extends Migration
             $table->foreign('id_tipodocumento', 'id_tipodocumentoficab_fk')->references('id')->on('tipo_documento')->onDelete('restrict')->onUpdate('restrict');
             $table->string('numero_documento',192)->nullable();
             $table->string('descripcion_documento', 192)->nullable();
-            $table->double('importe_totalcompra', 15,4);
-            $table->double('descuento_total', 15, 4);
+            $table->double('importe_totalcompra', 15,4)->nullable();
+            $table->double('descuento_total', 15, 4)->nullable();
             $table->date('fecha_documento')->nullable();
            
             $table->integer('id_usuariorecibio')->nullable();
