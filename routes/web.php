@@ -32,6 +32,7 @@ use App\Http\Controllers\MedidasBasicasController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\ComprasFIController;
+use App\Http\Controllers\TareasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -236,9 +237,9 @@ Route::delete('tipodni/{id}', [TipoDNIController::class,'eliminar'])->name('elim
 
 
  Route::get('/search', [PacienteController::class,'indexsearch']);
-Route::post('search/fetch', [PacienteController::class,'BuscarPersona'])->name('autocomplete.fetch');
+ Route::post('search/fetch', [PacienteController::class,'BuscarPersona'])->name('autocomplete.fetch');
 
- 
+  
  /** RUTAS DE CATASTRO DE MEDICOS */    
  Route::get('medico', [MedicoController::class,'index'])->name('medico');
  Route::get('medico/crear', [MedicoController::class,'crear'])->name('crear_medico');
@@ -315,7 +316,17 @@ Route::get('comprasfi/{id}/editar', [ComprasFIController::class,'editar'])->name
 Route::put('comprasfi/{id}', [ComprasFIController::class,'actualizar'])->name('actualizar_comprasfi');
 Route::delete('comprasfi/{id}', [ComprasFIController::class,'eliminar'])->name('eliminar_comprasfi');
 
+Route::post('getautocomplete', [ComprasFIController::class,'getAutocomplete'])->name('Autocomplte.getAutocomplte');
+//Route::post('comprasfi',[ComprasFIController::class,'getAutocomplete'])->name('Autocomplte.getAutocomplte');
+Route::get('easyautocomplete', [ComprasFIController::class,'getAutocomplete'])->name('autocomplete');
+Route::get('index-buscarproductos', [ComprasFIController::class,'viewBuscarProductos'])->name('form.productos');
+Route::post('product-list',[ComprasFIController::class,'list'])->name('product.list');
+Route::post('product-list2',[ComprasFIController::class,'listautocompleteProducto'])->name('product.list2');
+Route::get('vue',[ComprasFIController::class,'vueForm'])->name('vue.form');
 
+
+Route::get('tareas', [TareasController::class,'index'])->name('tareas');
+Route::get('tasks', [TareasController::class, 'datos']);
 
 
 });

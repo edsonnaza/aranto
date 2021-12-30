@@ -7,6 +7,7 @@ use App\Models\Seguro;
 use App\Models\Unidad;
 use App\Models\CategoriaPadre;
 use App\Models\CategoriaHijos;
+use App\Models\ComprasFIDET;
 
 
 
@@ -112,5 +113,18 @@ return $stock;
 
 
       }
+
+
+        public function comprasficab()
+    {
+        return $this->belongsToMany('ComprasFI');
+    }
+
+
+
+    public function shops()
+    {
+        return $this->belongsToMany('Shop');
+    }
 
 }

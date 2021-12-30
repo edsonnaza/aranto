@@ -6,7 +6,11 @@ use App\Models\Unidad;
 use App\Models\Persona;
 use App\Models\Clasificacion;
 use App\Models\TipoDocumentos;
+use App\Models\Productos;
+use App\Models\CategoriaPadre;
+use App\Models\Existencias;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ComprasFIController extends Controller
 {
@@ -22,18 +26,13 @@ class ComprasFIController extends Controller
         $proveedores=Persona::whereHas('ClasificacionProveedor')->get();
         // dd($proveedor);
        return view('comprasfi.index', compact('datas','almacenes','proveedores','tipodocumentos'));
+
+     // return ComprasFI::get();
     }
 
 
-       public function cargarhijos($id)
-    {
-        //dd($id);
-        $data = CategoriaHijos::findOrFail($id);
-        dd($data);
-        // return view('catastros.categoriahijos.cargarhijos', compact('data'));  
 
-        
-    }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -53,7 +52,7 @@ class ComprasFIController extends Controller
 
 
        // can('crear-categoriapadre');
-       // return view('catastros.comprasfi.crear');
+       return redirect('comprasfi')->with('mensaje', 'El registro se creó correctamente');
     }
 
     /**
@@ -91,10 +90,18 @@ class ComprasFIController extends Controller
      */
     public function editar($id)
     {
-        $padre = CategoriaPadre::findOrFail($id);
-        return view('catastros.categoriapadre.editar', compact('padre'));
-    }
+        $comprasfi_cab = ComprasFI::findOrFail($id);
 
+        $almacenes=Unidad::All();
+        $tipodocumentos=TipoDocumentos::where('activo',true)->get();
+        //$proveedor=Persona::belongsToMany(Clasificacion::class, 'clasificacion_persona','id_persona','id_clasificacion')->where('id_clasificacion',4)->get();
+      //  $personas=Persona::All();
+        // $sedes= Sede::All();
+        $proveedores=Persona::whereHas('ClasificacionProveedor')->get();
+         
+        return view('comprasfi.editar', compact('comprasfi_cab','almacenes','tipodocumentos','proveedores'));
+    }
+ 
     /**
      * Update the specified resource in storage.
      *
@@ -127,4 +134,163 @@ class ComprasFIController extends Controller
         abort(404);
     }
     }
+ 
+
+    /* public function productosDisponibles(Request $request)
+    {
+    	$productos = [];
+
+        if($request->has('q')){
+            $search = $request->q;
+            $productos =Productos::select("id", "producto_nombre")
+            		->where('producto_nombre', 'LIKE', "%$search%")
+            		->get();
+        }
+        return response()->json($productos);
+    }*/
+
+      public function viewBuscarProductos(){
+          //  return view('vue');
+
+
+      }
+
+
+      public function vueForm(){
+         return view('vue');
+          }
+
+          public function buscarArticulos(Request $request)
+    {
+      //  $datas = ComprasFI::All();
+       // dd($datas);
+      //  $almacenes=Unidad::All();
+     //   $tipodocumentos=TipoDocumentos::where('activo',true)->get();
+        //$proveedor=Persona::belongsToMany(Clasificacion::class, 'clasificacion_persona','id_persona','id_clasificacion')->where('id_clasificacion',4)->get();
+      //  $personas=Persona::All();
+        // $sedes= Sede::All();
+      //  $proveedores=Persona::whereHas('ClasificacionProveedor')->get();
+        // dd($proveedor);
+     //  return view('search');//, compact('datas','almacenes','proveedores','tipodocumentos'));
+
+     // return ComprasFI::get();
+
+
+
+
+       $search = $request->search;
+
+       if ($request->ajax()) {
+      if($search == ''){
+         $autocomplate = Productos::orderby('producto_nombre','asc')->select('id','producto_nombre')->limit(5)->get();
+      }else{
+         $autocomplate = Productos::orderby('producto_nombre','asc')->select('id','producto_nombre')->where('producto_nombre', 'like', '%' .$search . '%')->limit(5)->get();
+      }
+        
+      $response = array();
+    // var_dump($response);
+      foreach($autocomplate as $autocomplate){
+         $response[] = array("id"=>$autocomplate->id,"producto_nombre"=>$autocomplate->producto_nombre);
+      }
+         
+    //  echo json_encode($response);
+        return response()->json($response);
+        // console.log('Component mounted.');
+      exit;
+   }
+
+
+  // Log::info('This is some useful information.');
+    
+    }
+
+      
+
+     public function getAutocomplete(Request $request){
+
+      $search = $request->search;
+
+      // if ($request->ajax()) {
+      if($search == ''){
+         $autocomplate = Productos::orderby('producto_nombre','asc')->select('id','producto_nombre')->limit(5)->get();
+      }else{
+         $autocomplate = Productos::orderby('producto_nombre','asc')->select('id','producto_nombre')->where('producto_nombre', 'like', '%' .$search . '%')->limit(5)->get();
+      }
+        
+      $response = array();
+    // var_dump($response);
+      foreach($autocomplate as $autocomplate){
+         $response[] = array("id"=>$autocomplate->id,"producto_nombre"=>$autocomplate->producto_nombre);
+      }
+         
+    //  echo json_encode($response);
+        return response()->json($response);
+        // console.log('Component mounted.');
+      exit;
+   //}
+
+
+  // Log::info('This is some useful information.');
+    }
+
+        function list(Request $request)
+    {
+      //  if($request->get('query')){
+         //   $query  = $request->get('query');
+        if ($request->get('query')) {
+            $data = $request->get('query');
+           /* $data = DB::table('productos')
+                ->where('producto_nombre', 'LIKE', "%{$data}%")
+                ->get();*/
+//            dd($data);
+
+ $data = Productos::where('producto_nombre','like','%'.$data.'%')->select('id','producto_nombre','id_prodcategoriapadre')->get();
+ 
+ //return response()->json($data);
+            $output=array();
+            $output = '<ul class="list-group" style="display:block; position:relative">';
+            foreach ($data as $row) {
+
+             $catpadres = CategoriaPadre::find($row->id_prodcategoriapadre);
+             $catnombre=$catpadres->nombre_categoriapadre;
+            $existencia = Existencias::where('id_producto','=',$row->id)->where('id_unidad','=',1)->get();
+             $cantidad_unidad=0;
+
+             foreach ($existencia as $exist) {
+             $cantidad_unidad=$exist->cantidad;
+              //var_dump($existencia);
+               }
+              $output .= '
+
+            <li class="list-group-item">  <a href="#" class="ml-2" id='.$row->id.'  style="color:black;font-weight: bold; font-size: 10px;">' . $row->producto_nombre . '</a> <input type="hidden" id="id_catpadre" value='.$row->id_prodcategoriapadre .'><input type="hidden" id="catnombre" value='.$catnombre .'><input type="hidden" id="cantidad" value='.$cantidad_unidad .'> </li>';
+             
+            }
+            $output .= '</ul>';
+            echo $output;
+           // echo json($output);
+        }
+    }
+
+
+
+    public function autocompleteProducto(Request $request){
+    $term = $request->get('term');
+
+    $querys = Productos::where('producto_nombre', 'LIKE', '%' . $term . '%')->get();
+
+    $data = [];
+
+    foreach ($querys as $querys) {
+        $data[] = [
+            'label' => $querys->producto_nombre,
+            'value' => $querys->id
+        ];
+    }
+
+    return $data;
+}
+
+
+
+   
 }

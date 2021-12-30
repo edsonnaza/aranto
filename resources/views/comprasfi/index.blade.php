@@ -17,6 +17,7 @@
 @inject('Productos', 'App\Models\Productos')
 
 <div class="row">
+ 
     <div class="col-lg-12">
         @include('includes.mensaje')
         <div class="card card-info">
@@ -53,17 +54,33 @@
                         @foreach($datas as $data)
                             <tr>
                                 <td>{{$data->id}}</td>
-                                 <td>{{$data->created_at}}</td>
-                               <td>{{$data->id_unidad_destino}}</td>
+                                 <td>{{date('d-M-y H:i', strtotime($data->created_at))}}</td>
+                               <td>{{$data->id_unidad_destino}}-
+                               
+                                @foreach ($almacenes as $almacen)
+                                  @if ($almacen->id == $data->id_unidad_destino)
+                                    {{$almacen->nombre_unidad}} 
+                                  @endif
+                                 @endforeach
+                               
+                               </td>
                                 <td>{{$data->descripcion_documento}}</td>
-                                  <td>{{$data->id_proveedor}}</td>
+                                  <td>{{$data->id_proveedor}}-
+                                   @foreach ($proveedores as $proveedor)
+                                  @if ($proveedor->id == $data->id_proveedor)
+                                      {{$proveedor->full_name_persona}} 
+                                  @endif
+                                 @endforeach
+                                  
+                                  
+                                  </td>
                                 <td>{{$data->terminado}}</td>
                                  
                                
                                 
                                            
                                 <td>
-                                    <a href="{{route("editar_articulo", ['id' => $data->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                                    <a href="{{route("editar_comprasfi", ['id' => $data->id])}}" class="btn-accion-tabla tooltipsC" title="Editar este registro">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <form action="{{route("eliminar_producto",  ['id' => $data->id])}}" class="d-inline form-eliminar" method="POST">

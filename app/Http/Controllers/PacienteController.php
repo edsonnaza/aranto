@@ -13,6 +13,7 @@ use App\Models\Nacionalidad;
 use App\Models\EstadoCivil;
 use App\Models\Profesion;
 use App\Models\Genero;
+use App\Models\Productos;
 
 use DB;
 
@@ -204,7 +205,7 @@ class PacienteController extends Controller
     {
                     
 
-                $search = $request->search;
+          /*      $search = $request->search;
 
             if ($search == '') {
                 $employees = Persona::orderby('full_name_persona', 'asc')->select('*')->limit(5)->get();
@@ -217,7 +218,26 @@ class PacienteController extends Controller
                 $response[] = array("value" => $employee->id, "label" => $employee->full_name_persona,"fecha_nacimiento"=>$employee->fecha_nacimiento,"id_seguro"=>$employee->id_seguro,"id_tipodni"=>$employee->id_tipodni,"numero_dni"=>$employee->numero_dni,"genero"=>$employee->genero,"nro_mobil"=>$employee->nro_mobil,"email"=>$employee->email,"nro_telefono"=>$employee->nro_telefono,"facebook"=>$employee->facebook,"foto_persona"=>$employee->foto_persona,"ruc"=>$employee->ruc);
             }
             
-            return response()->json($response);
+            return response()->json($response);*/
+
+             $search = $request->search;
+
+      // if ($request->ajax()) {
+      if($search == ''){
+         $autocomplate = Productos::orderby('producto_nombre','asc')->select('id','producto_nombre')->limit(5)->get();
+      }else{
+         $autocomplate = Productos::orderby('producto_nombre','asc')->select('id','producto_nombre')->where('producto_nombre', 'like', '%' .$search . '%')->limit(5)->get();
+      }
+        
+      $response = array();
+    // var_dump($response);
+      foreach($autocomplate as $autocomplate){
+         $response[] = array("id"=>$autocomplate->id,"producto_nombre"=>$autocomplate->producto_nombre);
+      }
+         
+      echo json_encode($response);
+       //  return response()->json($response);
+      exit;
 
     
 

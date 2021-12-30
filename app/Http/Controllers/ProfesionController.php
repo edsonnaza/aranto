@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Profesion;
+use App\Models\Profesion;
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidarProfesion;
 

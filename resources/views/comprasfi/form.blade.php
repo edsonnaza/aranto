@@ -1,89 +1,40 @@
- <div class="form-group row">
-    <label for="persona_nombre" class="col-lg-3 col-form-label requerido">Nombre </label>
-    <div class="col-lg-8">
-        <input type="text" name="producto_nombre" id="producto_nombre" class="form-control" value="{{old('producto_nombre', $producto->producto_nombre ?? '')}}" required/>
-    </div>
-</div>
-
- <div class="form-group row">
-    <label for="producto_descripcion" class="col-lg-3 col-form-label requerido">Descripcion</label>
-    <div class="col-lg-8">
-        <input type="text" name="producto_descripcion" id="producto_descripcion" class="form-control" value="{{old('producto_descripcion', $producto->producto_descripcion ?? '')}}" required/>
-    </div>
-</div>
- 
   
-<div class="form-group row">
-    <label for="id_medidasbasicas" class="col-lg-3 col-form-label requerido">Unidad de medida</label>
-    <div class="col-lg-8">
-        <select name="id_medidasbasicas" id="id_medidasbasicas" class="form-control"  required>
-            <option value="">Seleccione Medida</option>
-         @foreach ($medidasbasicas as $medidas)
-    <option value="{{ $medidas->id }}" 
-    {{ (isset($articulo) ? ($medidas->id == $articulo->id_medidasbasicas ? 'selected' : '') : '')   }}> {{ $medidas->nombre_unidad_basica }} </option>
-  @endforeach 
-        </select>
-    </div>
-</div>
- 
- 
- 
- <div class="form-group row">
-    <label for="id_seguro" class="col-lg-3 col-form-label  ">Categoria</label>
-    <div class="col-lg-8">
-        <select name="id_prodcategoriapadre" id="id_prodcategoriapadre"    class="form-control"   >
-            
-         @foreach ($Productos->get() as $index=> $catpadre)
-
-@if($index==4 || $index==5))
-    <option value="{{ $index }}" 
-    {{ (isset($producto) ? ($index == $producto->id_prodcategoriapadre ? 'selected'  : '') : '')   }}> {{ $catpadre  }} </option>
- 
- @endif
-  @endforeach 
-
+   
   
-        </select>
+ 
+  <div class="col-md-6">
+     <div class="form-group input-group-sm">
+         <label class="label-control small">Medicamentos/ Descartables / Otros.</label>
+           <input name="productos" value=""   onkeyup="javascript:this.value=this.value.toUpperCase();document.getElementById('idproducto').value='';"   type="text" class="form-control input-sm"   required id="productos" onclick="select();" placeholder="Paracetamol 500mg" autocomplete="off">  
+        </div><!-- /.form-group -->
     </div>
-</div>
- 
- 
+   <input type="hidden" id="idproducto">
+        <div class="col-md-3">
+          <div class="form-group input-group-sm">
+         <label for="precioventa" class="label-control small">Precio Compra</label>
+         <input type="text" value="0" class="form-control input-sm" id="precio_compra">
+         </div>
+          </div>
+    <div class="col-md-3  ">
+    <div class="form-group input-group-sm">
+          <label for="cantidad" class="label-control small">Cantidad a reponer</label>
+         <input type="text" class="form-control  " id="cantidad_reponer" value="1">
+         
+          </div>
+        </div>
 
-
-    
-
-<div class="form-group row">
-    <label for="id_categoriahijo" class="col-lg-3 col-form-label  ">SubCategoria</label>
-    <div class="col-lg-8">
+          <div class="pull-right">
+       
+         <button class="btn btn-block btn-primary btn-sm" onclick="InsertarItem(document.getElementById('idproducto').value,document.getElementById('precio_compra').value,document.getElementById('cantidad_reponer').value,document.getElementById('idcategoria').value,document.getElementById('catnombre').value,$('#productos').val(),$('#idalmacen').val(),$('#cantidad_min').val(),$('#existencia_actual').val());" type="button"><span class="glyphicon glyphicon-plus"></span> Agregar Item</button>
+         <button class="btn btn-block btn-success btn-sm" onclick="Refresh();"> <span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
         
           
 
-             <select id="id_categoriahijo" data-old="{{ old('id_categoriahijo') }}" name="id_categoriahijo" class="form-control{{ $errors->has('id_categoriahijo') ? ' is-invalid' : '' }}"></select>
-        
-        </select>
-    </div>
-</div>
-   
- <div class="form-group row">
-    <label for="id_seguro" class="col-lg-3 col-form-label  ">IVA</label>
-    <div class="col-lg-8">
-        <select name="id_iva" id="id_iva"    class="form-control"   >
-            
-         @foreach ($ivas as $iva)
-
-
-    <option value="{{ $iva->id }}" 
-    {{ (isset($producto) ? ($iva->id == $producto->id_iva ? 'selected'  : '') : '')   }}> {{ $iva->iva_nombre  }} </option>
-  @endforeach 
-        </select>
-    </div>
-</div>
+        <!-- checkbox -->
+                 
+      </div>
   
-        <input type="hidden" id="idcathijoaux" name="idcathijoaux" value="{{ old('idcathijoaux', $producto->id_categoriahijo ?? '')}}"  />
  
-   
-
-</div>
 
 
  

@@ -19,8 +19,11 @@ class TablaComprasfiDet extends Migration
     $table->foreign('id_apertura', 'id_aperturafidet_fk')->references('id')->on('comprasfi_cab')->onDelete('restrict')->onUpdate('restrict');
     $table->unsignedBigInteger('id_producto');
     $table->foreign('id_producto', 'id_productofidet_fk')->references('id')->on('productos')->onDelete('restrict')->onUpdate('restrict');
-    $table->unsignedBigInteger('id_prodcategoriapadre');
-    
+    //$table->unsignedBigInteger('id_prodcategoriapadre');
+    //$table->foreign('id_prodcategoriapadre', 'id_prodcategoriapadredet_fk')->references('id')->on('categoriapadre')->onDelete('restrict')->onUpdate('restrict');
+    $table->unsignedBigInteger('id_medidas');
+    $table->foreign('id_medidas', 'id_medidasdet_fk')->references('id')->on('medidas')->onDelete('restrict')->onUpdate('restrict');
+    $table->double('cantidad', 15, 4);
     $table->double('precio_compra', 15, 4);
     $table->double('precio_venta', 15, 4);
     $table->double('total_precio_compra', 15, 4);
