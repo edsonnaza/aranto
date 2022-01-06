@@ -33,6 +33,8 @@ use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\ComprasFIController;
 use App\Http\Controllers\TareasController;
+use App\Http\Controllers\ProveedorController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -256,6 +258,17 @@ Route::delete('tipodni/{id}', [TipoDNIController::class,'eliminar'])->name('elim
  Route::get('persona/{id}/editar', [PersonaController::class,'editar'])->name('editar_persona');
  Route::put('persona/{id}', [PersonaController::class,'actualizar'])->name('actualizar_persona');
  Route::delete('persona/{id}', [PersonaController::class,'eliminar'])->name('eliminar_persona');
+
+
+/** RUTAS DE CATASTRO DE PROVEEDORES */
+Route::get('proveedor', [ProveedorController::class, 'index'])->name('proveedor');
+Route::get('proveedor/crear', [ProveedorController::class, 'crear'])->name('crear_proveedor');
+Route::post('proveedor', [ProveedorController::class, 'guardar'])->name('guardar_proveedor');
+Route::get('proveedor/{id}/editar', [ProveedorController::class, 'editar'])->name('editar_proveedor');
+Route::put('proveedor/{id}', [ProveedorController::class, 'actualizar'])->name('actualizar_proveedor');
+Route::delete('proveedor/{id}', [ProveedorController::class, 'eliminar'])->name('eliminar_proveedor');
+
+
 
  /** RUTAS DE CATASTRO DE ALMACENES/UNIDAD */
 Route::get('unidad', [UnidadController::class,'index'])->name('unidad');

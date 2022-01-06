@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+
 
 class TablaPrecioProductosSeeder extends Seeder
 {
@@ -13,7 +17,7 @@ class TablaPrecioProductosSeeder extends Seeder
      */
     public function run()
     {
-       now = Carbon::now()->toDateTimeString();
+       $now = Carbon::now()->toDateTimeString();
     $precio_productos = [
     array('id' => '1', 'id_producto'=>'1','id_seguro'=>'1','precio_costo'=>'90000','precio_venta'=>'150000',  'sede_id'=>'1','created_at' => $now, 'updated_at' => $now),
     array('id' => '2', 'id_producto'=>'1','id_seguro'=>'2','precio_costo' =>'95000', 'precio_venta'=>'180000',  'sede_id'=>'1','created_at' => $now, 'updated_at' => $now),

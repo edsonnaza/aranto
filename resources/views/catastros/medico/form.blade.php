@@ -191,18 +191,7 @@
 
 </div>
 
-<div class="form-group row">
-    <label for="id_profesion" class="col-lg-3 col-form-label requerido">Usuario en el sistema</label>
-    <div class="col-lg-8">
-        <select name="id_usuario" id="id_usuario" class="form-control"  required>
-            <option value="">Seleccione Usuario</option>
-         @foreach ($usuarios as $usuario)
-    <option value="{{ $usuario->id }}" 
-    {{ (isset($data) ? ($usuario->id == $data->id_usuario ? 'selected' : '') : '')   }}> {{ $usuario->nombre }} </option>
-  @endforeach 
-        </select>
-    </div>
-</div>
+ 
  
 
 </div>

@@ -91,7 +91,9 @@ class PersonaController extends Controller
             'id_seguro'=>$request->id_seguro,
             'id_clasificacion'=>$request->id_clasificacion,
             'id_nacionalidad'=>$request->id_nacionalidad,          
-            'foto_persona'=>$request->foto_persona
+            'foto_persona'=>$request->foto_persona,
+            'ruc'=>$request->ruc,
+            'razon_social'=>$request->razon_social
             
             ]);
 
@@ -203,6 +205,8 @@ class PersonaController extends Controller
         $persona->id_nacionalidad=$request->id_nacionalidad;        
         $persona->foto_persona=$request->foto_persona;*/
         $persona->full_name_persona=$request->persona_nombre.' '.$request->persona_apellido;
+        $persona->razon_social=$request->razon_social;
+        $persona->ruc=$request->ruc;
         
         $persona->update(array_filter($request->all()));
         //$persona->update();

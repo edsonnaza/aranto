@@ -1,3 +1,4 @@
+ 
  <div class="form-group row">
     <label for="persona_nombre" class="col-lg-3 col-form-label requerido">Nombres</label>
     <div class="col-lg-8">
@@ -18,11 +19,10 @@
         <input type="text" name="ruc" id="ruc" class="form-control" value="{{old('ruc', $data->ruc ?? '')}}" required/>
     </div>
 </div>
-
-<div class="form-group row">
+  <div class="form-group row">
     <label for="ruc" class="col-lg-3 col-form-label ">Razón Social / Nombre Fantasia</label>
     <div class="col-lg-8">
-        <input type="text" name="razon_social" id="razon_social" class="form-control" value="{{old('razon_social', $data->razon_social ?? '')}}" required/>
+        <input type="text" name="ruc" id="ruc" class="form-control" value="{{old('ruc', $data->nombre_proveedor ?? '')}}" required/>
     </div>
 </div>
 <div class="form-group row">
@@ -32,28 +32,17 @@
     </div>
 </div>
 
- <div class="form-group row">
-    <label for="id_seguro" class="col-lg-3 col-form-label  ">Seguro</label>
-    <div class="col-lg-8">
-        <select name="id_seguro" id="id_seguro" class="form-control"   >
-            <option value="">Seleccione Seguro </option>
-         @foreach ($seguro as $seguro)
-    <option value="{{ $seguro->id }}" 
-    {{ (isset($data) ? ($seguro->id == $data->id_seguro ? 'selected' : '') : '')   }}> {{ $seguro->nombre_seguro }} </option>
-  @endforeach 
-        </select>
-    </div>
-</div>
-
  
-
+<input type="hidden" value="1" name="id_seguro">
+ 
+ 
 
 <input   type="hidden" name="id_clasificacion" id="id_clasificacion"  value="{{old('id_clasificacion',$data->id_clasificacion ?? '')}}">
 
 <div class="form-group row">
-    <label for="id_profesion" class="col-lg-3 col-form-label  ">Profesión</label>
+    <label for="id_profesion" class="col-lg-3 col-form-label requerido">Profesión</label>
     <div class="col-lg-8">
-        <select name="id_profesion" id="id_profesion" class="form-control"   >
+        <select name="id_profesion" id="id_profesion" class="form-control"  required>
             <option value="">Seleccione Profesión</option>
          @foreach ($profesion as $profesion)
     <option value="{{ $profesion->id }}" 
@@ -64,9 +53,9 @@
 </div>
 
  <div class="form-group row">
-    <label for="id_nacionalidad" class="col-lg-3 col-form-label  ">Nacionalidad</label>
+    <label for="id_nacionalidad" class="col-lg-3 col-form-label requerido">Nacionalidad</label>
     <div class="col-lg-8">
-        <select name="id_nacionalidad" id="id_nacionalidad" class="form-control"   >
+        <select name="id_nacionalidad" id="id_nacionalidad" class="form-control"  required>
             <option value="">Seleccione Nacionalidad</option>
          @foreach ($nacionalidad as $nacionalidad)
     <option value="{{ $nacionalidad->id }}" 
@@ -75,10 +64,11 @@
         </select>
     </div>
 </div>
+
  <div class="form-group row">
-    <label for="id_estadocivil" class="col-lg-3 col-form-label  ">Estado Civil</label>
+    <label for="id_estadocivil" class="col-lg-3 col-form-label requerido">Estado Civil</label>
     <div class="col-lg-8">
-        <select name="id_estadocivil" id="id_estadocivil" class="form-control"   >
+        <select name="id_estadocivil" id="id_estadocivil" class="form-control"  required>
             <option value="">Seleccione Estado Civil</option>
          @foreach ($estadocivil as $estadocivil)
     <option value="{{ $estadocivil->id }}" 
@@ -87,41 +77,17 @@
         </select>
     </div>
 </div>
+<input type="hidden" value="5" name="id_estadocivil">
+ 
+   
+
+    <input name="id_clasificacion" id="id_clasificacion"   type="hidden" value="2">
 
 
  <div class="form-group row">
-    <label for="id_tipopersona" class="col-lg-3 col-form-label requerido">Tipo Persona</label>
+    <label for="id_tipodni" class="col-lg-3 col-form-label requerido">Tipo Documento</label>
     <div class="col-lg-8">
-        <select name="id_tipopersona" id="id_tipopersona" class="form-control"  required>
-            <option value="">Seleccione Tipo Persona</option>
-         @foreach ($tipopersona as $tipopersona)
-    <option value="{{ $tipopersona->id }}" 
-    {{ (isset($data) ? ($tipopersona->id == $data->id_tipopersona ? 'selected' : '') : '')   }}> {{ $tipopersona->nombre_tipopersona }} </option>
-  @endforeach 
-        </select>
-    </div>
-</div>
-    <div class="form-group row">
-    <label for="rol_id" class="col-lg-3 col-form-label requerido">Clasificación</label>
-    <div class="col-lg-8">
-        <select name="id_clasificacion[]" id="id_clasificacion" class="form-control" multiple required>
-            <option value="">Seleccione clasificación</option>
-            @foreach($clasificacion as $id => $nombre)
-                <option
-                value="{{$id}}"
-                {{is_array(old('id_clasificacion')) ? (in_array($id, old('id_clasificacion')) ? 'selected' : '')  : (isset($data) ? ($data->Clasificacion->firstWhere('id', $id) ? 'selected' : '') : '')}}
-                >
-                {{$nombre}}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-</div>
- <div class="form-group row">
-    <label for="id_tipodni" class="col-lg-3 col-form-label  ">Tipo Documento</label>
-    <div class="col-lg-8">
-        <select name="id_tipodni" id="id_tipodni" class="form-control"   >
+        <select name="id_tipodni" id="id_tipodni" class="form-control"  required>
             <option value="">Seleccione CDI</option>
          @foreach ($tipodni as $tipodni)
     <option value="{{ $tipodni->id }}" 
@@ -132,16 +98,16 @@
 </div>
 
 <div class="form-group row">
-    <label for="numero_dni" class="col-sm-3 col-form-label  ">Nro. Documento</label>
+    <label for="numero_dni" class="col-sm-3 col-form-label requerido">Nro. Documento</label>
     <div class="col-lg-8">
-        <input type="text" name="numero_dni" id="numero_dni" class="form-control" value="{{old('numero_dni', $data->numero_dni ?? '')}}"  />
+        <input type="text" name="numero_dni" id="numero_dni" class="form-control" value="{{old('numero_dni', $data->numero_dni ?? '')}}" required/>
     </div>
 </div>
 
  <div class="form-group row">
-    <label for="genero" class="col-lg-3 col-form-label  ">Género</label>
+    <label for="genero" class="col-lg-3 col-form-label requerido">Género</label>
     <div class="col-lg-8">
-        <select name="genero" id="genero" class="form-control"   >
+        <select name="genero" id="genero" class="form-control"  required>
             <option value="">Género</option>
              
          @foreach ($generos as $genero)
@@ -153,10 +119,12 @@
     </div>
 </div>
 
+<input type="hidden" value="1" name="genero">
+
 <div class="form-group row">
-    <label for="id_profesion" class="col-lg-3 col-form-label  ">Especialidad Médica</label>
+    <label for="id_profesion" class="col-lg-3 col-form-label requerido">Especialidad</label>
     <div class="col-lg-8">
-        <select name="id_especialidad" id="id_especialidad" class="form-control"   >
+        <select name="id_especialidad" id="id_especialidad" class="form-control"  required>
             <option value="">Seleccione Especialidad</option>
          @foreach ($especialidades as $especialidad)
     <option value="{{ $especialidad->id }}" 
@@ -165,17 +133,18 @@
         </select>
     </div>
 </div>
+
 <div class="form-group row">
-    <label for="nro_mobil" class="col-lg-3 col-form-label  ">Nro. Celular</label>
+    <label for="nro_mobil" class="col-lg-3 col-form-label requerido">Nro. Celular</label>
     <div class="col-lg-8">
-        <input type="text" name="nro_mobil" id="nro_mobil" class="form-control" value="{{old('nro_mobil', $data->nro_mobil ?? '')}}"  />
+        <input type="text" name="nro_mobil" id="nro_mobil" class="form-control" value="{{old('nro_mobil', $data->nro_mobil ?? '')}}" required/>
 </div>
 </div>
 
 <div class="form-group row">
-    <label for="email" class="col-lg-3 col-form-label  ">E-Mail</label>
+    <label for="email" class="col-lg-3 col-form-label requerido">E-Mail</label>
     <div class="col-lg-8">
-        <input type="text" name="email" id="email" class="form-control" value="{{old('email', $data->email ?? '')}}"  />
+        <input type="text" name="email" id="email" class="form-control" value="{{old('email', $data->email ?? '')}}" required/>
     </div>
 </div>
 
@@ -207,6 +176,7 @@
 
 </div>
 
+ 
  
 
 </div>

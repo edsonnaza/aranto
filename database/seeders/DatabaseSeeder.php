@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
             'comprasfi_cab',
             'comprasfi_det',
             'tipo_documento',
+            'proveedores',
         ]);
         $this->call(TablaSedeSeeder::class);
         $this->call(TablaSegurosSeeder::class);
@@ -76,6 +77,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TablaProductosSeeder::class);
         $this->call(TablaProductoExistenciaSeeder::class);
         $this->call(TablaPrecioProductosSeeder::class);
+        $this->call(TablaProveedoresSeeder::class);
+
     }
 
 	    protected function truncateTablas(array $tablas)
